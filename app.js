@@ -54,6 +54,20 @@ taskInput.addEventListener('keypress', function(e) {
     }
 });
 
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    // Ctrl/Cmd + K to focus input
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        taskInput.focus();
+    }
+    // Escape to clear input
+    if (e.key === 'Escape' && document.activeElement === taskInput) {
+        taskInput.value = '';
+        taskInput.blur();
+    }
+});
+
 function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null) {
     const li = document.createElement('li');
     const textNode = document.createTextNode(taskText);
