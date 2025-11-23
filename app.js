@@ -2,6 +2,7 @@ let tasks = [];
 const taskInput = document.getElementById('taskInput');
 const addButton = document.getElementById('addButton');
 const clearButton = document.getElementById('clearButton');
+const prioritySelect = document.getElementById('prioritySelect');
 const taskList = document.getElementById('taskList');
 
 // Load tasks from localStorage on page load
@@ -10,7 +11,7 @@ function loadTasks() {
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
         tasks.forEach(task => {
-            const li = createTaskElement(task.text, task.completed);
+            const li = createTaskElement(task.text, task.completed, task.priority || 'medium');
             taskList.appendChild(li);
         });
     }
@@ -19,10 +20,15 @@ function loadTasks() {
 // Save tasks to localStorage
 function saveTasks() {
     const taskElements = taskList.querySelectorAll('li');
-    tasks = Array.from(taskElements).map(li => ({
-        text: li.childNodes[1].textContent.trim(),
-        completed: li.querySelector('.task-checkbox').checked
-    }));
+    tasks = Array.from(taskElements).map(li => {
+        const priorityClass = Array.from(li.classList).find(c => c.startsWith('priority-'));
+        const priority = priorityClass ? priorityClass.replace('priority-', '') : 'medium';
+        return {
+            text: li.childNodes[1].textContent.trim(),
+            completed: li.querySelector('.task-checkbox').checked,
+            priority: priority
+        };
+    });
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
@@ -45,9 +51,12 @@ taskInput.addEventListener('keypress', function(e) {
     }
 });
 
-function createTaskElement(taskText, isCompleted = false) {
+function createTaskElement(taskText, isCompleted = false, priority = 'medium') {
     const li = document.createElement('li');
     const textNode = document.createTextNode(taskText);
+    
+    // Add priority class
+    li.className = `priority-${priority}`;
     
     // Add checkbox for task completion
     const checkbox = document.createElement('input');
@@ -90,7 +99,8 @@ function createTaskElement(taskText, isCompleted = false) {
 function addTask() {
     const taskText = taskInput.value.trim();
     if (taskText) {
-        const li = createTaskElement(taskText);
+        const priority = prioritySelect.value;
+        const li = createTaskElement(taskText, false, priority);
         taskList.appendChild(li);
         taskInput.value = '';
         saveTasks();
