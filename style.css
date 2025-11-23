@@ -50,6 +50,18 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
+#addButton, #clearButton {
+    margin-left: 10px;
+}
+
+#clearButton {
+    background-color: #ff6b6b;
+}
+
+#clearButton:hover {
+    background-color: #ee5a5a;
+}
+
 #taskList {
     list-style-type: none;
     padding: 0;
