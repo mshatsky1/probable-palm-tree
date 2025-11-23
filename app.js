@@ -1,6 +1,7 @@
 let tasks = [];
 const taskInput = document.getElementById('taskInput');
 const addButton = document.getElementById('addButton');
+const clearButton = document.getElementById('clearButton');
 const taskList = document.getElementById('taskList');
 
 // Load tasks from localStorage on page load
@@ -27,6 +28,15 @@ function saveTasks() {
 
 addButton.addEventListener('click', function() {
     addTask();
+});
+
+clearButton.addEventListener('click', function() {
+    if (confirm('Are you sure you want to clear all tasks?')) {
+        taskList.innerHTML = '';
+        tasks = [];
+        localStorage.removeItem('tasks');
+        updateTaskCount();
+    }
 });
 
 taskInput.addEventListener('keypress', function(e) {
