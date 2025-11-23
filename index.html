@@ -29,8 +29,13 @@
         <button id="addButton">Add Task</button>
         <button id="clearButton">Clear All</button>
     </div>
+    <div class="export-import-container">
+        <button id="exportButton">Export Tasks</button>
+        <input type="file" id="importInput" accept=".json" style="display: none;">
+        <button id="importButton">Import Tasks</button>
+    </div>
     <ul id="taskList"></ul>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
 

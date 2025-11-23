@@ -1,3 +1,5 @@
+import { exportTasks, importTasks } from './utils.js';
+
 let tasks = [];
 const taskInput = document.getElementById('taskInput');
 const addButton = document.getElementById('addButton');
@@ -8,6 +10,9 @@ const filterAll = document.getElementById('filterAll');
 const filterActive = document.getElementById('filterActive');
 const filterCompleted = document.getElementById('filterCompleted');
 const darkModeToggle = document.getElementById('darkModeToggle');
+const exportButton = document.getElementById('exportButton');
+const importButton = document.getElementById('importButton');
+const importInput = document.getElementById('importInput');
 
 let currentFilter = 'all';
 let darkMode = localStorage.getItem('darkMode') === 'true';
@@ -205,6 +210,21 @@ function filterTasks(filter) {
 filterAll.addEventListener('click', () => filterTasks('all'));
 filterActive.addEventListener('click', () => filterTasks('active'));
 filterCompleted.addEventListener('click', () => filterTasks('completed'));
+
+// Export/Import functionality
+exportButton.addEventListener('click', function() {
+    exportTasks();
+});
+
+importButton.addEventListener('click', function() {
+    importInput.click();
+});
+
+importInput.addEventListener('change', function(e) {
+    if (e.target.files.length > 0) {
+        importTasks(e.target.files[0]);
+    }
+});
 
 // Load tasks when page loads
 loadTasks();

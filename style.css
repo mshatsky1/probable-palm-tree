@@ -33,6 +33,21 @@ body.dark-mode {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
+.export-import-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.export-import-container button {
+    background-color: #2196F3;
+}
+
+.export-import-container button:hover {
+    background-color: #1976D2;
+}
+
 .task-counter {
     text-align: center;
     color: #fff;
