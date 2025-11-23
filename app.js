@@ -21,6 +21,8 @@ function addTask() {
         
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
+        deleteBtn.style.backgroundColor = '#f44336';
+        deleteBtn.style.marginLeft = '10px';
         deleteBtn.addEventListener('click', function() {
             li.remove();
         });
