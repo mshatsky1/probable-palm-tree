@@ -7,8 +7,25 @@ const taskList = document.getElementById('taskList');
 const filterAll = document.getElementById('filterAll');
 const filterActive = document.getElementById('filterActive');
 const filterCompleted = document.getElementById('filterCompleted');
+const darkModeToggle = document.getElementById('darkModeToggle');
 
 let currentFilter = 'all';
+let darkMode = localStorage.getItem('darkMode') === 'true';
+
+// Dark mode functionality
+function toggleDarkMode() {
+    darkMode = !darkMode;
+    document.body.classList.toggle('dark-mode', darkMode);
+    localStorage.setItem('darkMode', darkMode);
+    darkModeToggle.textContent = darkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+
+if (darkMode) {
+    document.body.classList.add('dark-mode');
+    darkModeToggle.textContent = '☀️ Light Mode';
+}
+
+darkModeToggle.addEventListener('click', toggleDarkMode);
 
 // Load tasks from localStorage on page load
 function loadTasks() {
