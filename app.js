@@ -4,6 +4,11 @@ const addButton = document.getElementById('addButton');
 const clearButton = document.getElementById('clearButton');
 const prioritySelect = document.getElementById('prioritySelect');
 const taskList = document.getElementById('taskList');
+const filterAll = document.getElementById('filterAll');
+const filterActive = document.getElementById('filterActive');
+const filterCompleted = document.getElementById('filterCompleted');
+
+let currentFilter = 'all';
 
 // Load tasks from localStorage on page load
 function loadTasks() {
@@ -146,6 +151,36 @@ function updateTaskCount() {
         taskCountElement.textContent = `${count} ${count === 1 ? 'task' : 'tasks'}`;
     }
 }
+
+// Filter tasks
+function filterTasks(filter) {
+    currentFilter = filter;
+    const taskItems = taskList.querySelectorAll('li');
+    taskItems.forEach(li => {
+        const checkbox = li.querySelector('.task-checkbox');
+        const isCompleted = checkbox.checked;
+        
+        if (filter === 'all') {
+            li.style.display = 'flex';
+        } else if (filter === 'active' && !isCompleted) {
+            li.style.display = 'flex';
+        } else if (filter === 'completed' && isCompleted) {
+            li.style.display = 'flex';
+        } else {
+            li.style.display = 'none';
+        }
+    });
+    
+    // Update active filter button
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    if (filter === 'all') filterAll.classList.add('active');
+    if (filter === 'active') filterActive.classList.add('active');
+    if (filter === 'completed') filterCompleted.classList.add('active');
+}
+
+filterAll.addEventListener('click', () => filterTasks('all'));
+filterActive.addEventListener('click', () => filterTasks('active'));
+filterCompleted.addEventListener('click', () => filterTasks('completed'));
 
 // Load tasks when page loads
 loadTasks();
