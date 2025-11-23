@@ -8,6 +8,11 @@ body {
 
 h1 {
     color: #333;
+    text-align: center;
+}
+
+.input-container {
+    margin: 20px 0;
 }
 
 input {
