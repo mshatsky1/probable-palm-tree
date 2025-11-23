@@ -70,6 +70,7 @@ function createTaskElement(taskText, isCompleted = false) {
     deleteBtn.addEventListener('click', function() {
         li.remove();
         saveTasks();
+        updateTaskCount();
     });
     li.appendChild(deleteBtn);
     
@@ -83,9 +84,20 @@ function addTask() {
         taskList.appendChild(li);
         taskInput.value = '';
         saveTasks();
+        updateTaskCount();
+    }
+}
+
+// Update task counter
+function updateTaskCount() {
+    const count = taskList.querySelectorAll('li').length;
+    const taskCountElement = document.getElementById('taskCount');
+    if (taskCountElement) {
+        taskCountElement.textContent = `${count} ${count === 1 ? 'task' : 'tasks'}`;
     }
 }
 
 // Load tasks when page loads
 loadTasks();
+updateTaskCount();
 
