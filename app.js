@@ -134,12 +134,19 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
 function addTask() {
     const taskText = taskInput.value.trim();
     if (taskText) {
+        if (taskText.length > 200) {
+            alert('Task text is too long. Maximum 200 characters allowed.');
+            return;
+        }
         const priority = prioritySelect.value;
         const li = createTaskElement(taskText, false, priority);
         taskList.appendChild(li);
         taskInput.value = '';
         saveTasks();
         updateTaskCount();
+        filterTasks(currentFilter); // Reapply filter
+    } else {
+        alert('Please enter a task before adding.');
     }
 }
 
