@@ -11,7 +11,7 @@ function loadTasks() {
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
         tasks.forEach(task => {
-            const li = createTaskElement(task.text, task.completed, task.priority || 'medium');
+            const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt);
             taskList.appendChild(li);
         });
     }
@@ -23,10 +23,13 @@ function saveTasks() {
     tasks = Array.from(taskElements).map(li => {
         const priorityClass = Array.from(li.classList).find(c => c.startsWith('priority-'));
         const priority = priorityClass ? priorityClass.replace('priority-', '') : 'medium';
+        const timeSpan = li.querySelector('.task-time');
+        const createdAt = timeSpan ? timeSpan.getAttribute('data-time') : new Date().toISOString();
         return {
             text: li.childNodes[1].textContent.trim(),
             completed: li.querySelector('.task-checkbox').checked,
-            priority: priority
+            priority: priority,
+            createdAt: createdAt
         };
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -51,12 +54,24 @@ taskInput.addEventListener('keypress', function(e) {
     }
 });
 
-function createTaskElement(taskText, isCompleted = false, priority = 'medium') {
+function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null) {
     const li = document.createElement('li');
     const textNode = document.createTextNode(taskText);
     
     // Add priority class
     li.className = `priority-${priority}`;
+    
+    // Add timestamp
+    const timestamp = createdAt || new Date().toISOString();
+    const date = new Date(timestamp);
+    const timeStr = date.toLocaleString();
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'task-time';
+    timeSpan.textContent = timeStr;
+    timeSpan.setAttribute('data-time', timestamp);
+    timeSpan.style.fontSize = '12px';
+    timeSpan.style.color = '#666';
+    timeSpan.style.marginLeft = '10px';
     
     // Add checkbox for task completion
     const checkbox = document.createElement('input');
@@ -75,6 +90,7 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium') {
     });
     li.appendChild(checkbox);
     li.appendChild(textNode);
+    li.appendChild(timeSpan);
     
     if (isCompleted) {
         li.style.textDecoration = 'line-through';
