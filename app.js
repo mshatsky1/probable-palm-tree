@@ -15,9 +15,13 @@ const exportButton = document.getElementById('exportButton');
 const importButton = document.getElementById('importButton');
 const importInput = document.getElementById('importInput');
 const searchInput = document.getElementById('searchInput');
+const undoButton = document.getElementById('undoButton');
+const redoButton = document.getElementById('redoButton');
 
 let currentFilter = 'all';
 let darkMode = localStorage.getItem('darkMode') === 'true';
+let taskHistory = [];
+let historyIndex = -1;
 
 // Dark mode functionality
 function toggleDarkMode() {
@@ -65,6 +69,15 @@ function saveTasks() {
         };
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    
+    // Add to history for undo/redo
+    taskHistory = taskHistory.slice(0, historyIndex + 1);
+    taskHistory.push(JSON.stringify(tasks));
+    historyIndex++;
+    if (taskHistory.length > 50) {
+        taskHistory.shift();
+        historyIndex--;
+    }
 }
 
 addButton.addEventListener('click', function() {
@@ -293,6 +306,33 @@ importInput.addEventListener('change', function(e) {
         importTasks(e.target.files[0]);
     }
 });
+
+// Undo/Redo functionality
+undoButton.addEventListener('click', function() {
+    if (historyIndex > 0) {
+        historyIndex--;
+        const previousState = JSON.parse(taskHistory[historyIndex]);
+        restoreTasks(previousState);
+    }
+});
+
+redoButton.addEventListener('click', function() {
+    if (historyIndex < taskHistory.length - 1) {
+        historyIndex++;
+        const nextState = JSON.parse(taskHistory[historyIndex]);
+        restoreTasks(nextState);
+    }
+});
+
+function restoreTasks(tasksData) {
+    taskList.innerHTML = '';
+    tasksData.forEach(task => {
+        const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt, task.dueDate);
+        taskList.appendChild(li);
+    });
+    updateTaskCount();
+    filterTasks(currentFilter);
+}
 
 // Search functionality
 searchInput.addEventListener('input', function() {
