@@ -116,6 +116,21 @@ document.addEventListener('keydown', function(e) {
         taskInput.value = '';
         taskInput.blur();
     }
+    // Arrow keys for navigation
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        const visibleTasks = Array.from(taskList.querySelectorAll('li')).filter(li => li.style.display !== 'none');
+        if (visibleTasks.length > 0) {
+            const currentIndex = visibleTasks.findIndex(li => li === document.activeElement);
+            let nextIndex;
+            if (e.key === 'ArrowDown') {
+                nextIndex = currentIndex < visibleTasks.length - 1 ? currentIndex + 1 : 0;
+            } else {
+                nextIndex = currentIndex > 0 ? currentIndex - 1 : visibleTasks.length - 1;
+            }
+            visibleTasks[nextIndex].focus();
+            e.preventDefault();
+        }
+    }
 });
 
 function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null, dueDate = null, category = null) {
@@ -124,6 +139,7 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
     
     // Add priority class
     li.className = `priority-${priority}`;
+    li.setAttribute('tabindex', '0');
     
     // Add timestamp
     const timestamp = createdAt || new Date().toISOString();

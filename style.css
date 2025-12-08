@@ -204,6 +204,12 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     animation: slideIn 0.3s ease-out;
+    cursor: pointer;
+    outline: none;
+}
+
+#taskList li:focus {
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.5);
 }
 
 @keyframes slideIn {
