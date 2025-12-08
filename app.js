@@ -11,6 +11,7 @@ const taskList = document.getElementById('taskList');
 const filterAll = document.getElementById('filterAll');
 const filterActive = document.getElementById('filterActive');
 const filterCompleted = document.getElementById('filterCompleted');
+const filterOverdue = document.getElementById('filterOverdue');
 const darkModeToggle = document.getElementById('darkModeToggle');
 const sortSelect = document.getElementById('sortSelect');
 const exportButton = document.getElementById('exportButton');
@@ -335,12 +336,16 @@ function filterTasks(filter) {
     taskItems.forEach(li => {
         const checkbox = li.querySelector('.task-checkbox');
         const isCompleted = checkbox.checked;
+        const dueDateSpan = li.querySelector('.due-date');
+        const isOverdue = dueDateSpan && dueDateSpan.textContent.includes('Overdue');
         
         if (filter === 'all') {
             li.style.display = 'flex';
         } else if (filter === 'active' && !isCompleted) {
             li.style.display = 'flex';
         } else if (filter === 'completed' && isCompleted) {
+            li.style.display = 'flex';
+        } else if (filter === 'overdue' && isOverdue && !isCompleted) {
             li.style.display = 'flex';
         } else {
             li.style.display = 'none';
@@ -352,11 +357,13 @@ function filterTasks(filter) {
     if (filter === 'all') filterAll.classList.add('active');
     if (filter === 'active') filterActive.classList.add('active');
     if (filter === 'completed') filterCompleted.classList.add('active');
+    if (filter === 'overdue') filterOverdue.classList.add('active');
 }
 
 filterAll.addEventListener('click', () => filterTasks('all'));
 filterActive.addEventListener('click', () => filterTasks('active'));
 filterCompleted.addEventListener('click', () => filterTasks('completed'));
+filterOverdue.addEventListener('click', () => filterTasks('overdue'));
 
 // Sort functionality
 sortSelect.addEventListener('change', function() {
