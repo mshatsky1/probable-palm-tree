@@ -221,11 +221,32 @@ function addTask() {
 
 // Update task counter
 function updateTaskCount() {
-    const count = taskList.querySelectorAll('li').length;
+    const allTasks = taskList.querySelectorAll('li');
+    const count = allTasks.length;
     const taskCountElement = document.getElementById('taskCount');
     if (taskCountElement) {
         taskCountElement.textContent = `${count} ${count === 1 ? 'task' : 'tasks'}`;
     }
+    
+    // Update statistics
+    let active = 0, completed = 0, overdue = 0;
+    allTasks.forEach(li => {
+        const checkbox = li.querySelector('.task-checkbox');
+        if (checkbox.checked) {
+            completed++;
+        } else {
+            active++;
+        }
+        const dueDateSpan = li.querySelector('.due-date');
+        if (dueDateSpan && dueDateSpan.textContent.includes('Overdue')) {
+            overdue++;
+        }
+    });
+    
+    document.getElementById('statTotal').textContent = count;
+    document.getElementById('statActive').textContent = active;
+    document.getElementById('statCompleted').textContent = completed;
+    document.getElementById('statOverdue').textContent = overdue;
 }
 
 // Filter tasks
