@@ -138,6 +138,20 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
         li.style.opacity = '0.6';
     }
     
+    const editBtn = document.createElement('button');
+    editBtn.textContent = 'Edit';
+    editBtn.style.backgroundColor = '#2196F3';
+    editBtn.style.marginLeft = '10px';
+    editBtn.className = 'edit-btn';
+    editBtn.addEventListener('click', function() {
+        const newText = prompt('Edit task:', taskText);
+        if (newText !== null && newText.trim() !== '') {
+            textNode.textContent = newText.trim();
+            saveTasks();
+        }
+    });
+    li.appendChild(editBtn);
+    
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Delete';
     deleteBtn.style.backgroundColor = '#f44336';
