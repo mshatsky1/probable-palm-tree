@@ -6,6 +6,7 @@ const addButton = document.getElementById('addButton');
 const clearButton = document.getElementById('clearButton');
 const prioritySelect = document.getElementById('prioritySelect');
 const dueDateInput = document.getElementById('dueDateInput');
+const categoryInput = document.getElementById('categoryInput');
 const taskList = document.getElementById('taskList');
 const filterAll = document.getElementById('filterAll');
 const filterActive = document.getElementById('filterActive');
@@ -44,7 +45,7 @@ function loadTasks() {
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
         tasks.forEach(task => {
-            const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt, task.dueDate);
+            const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt, task.dueDate, task.category);
             taskList.appendChild(li);
         });
     }
@@ -60,12 +61,15 @@ function saveTasks() {
         const createdAt = timeSpan ? timeSpan.getAttribute('data-time') : new Date().toISOString();
         const dueDateSpan = li.querySelector('.due-date');
         const dueDate = dueDateSpan ? dueDateSpan.getAttribute('data-due') : null;
+        const categorySpan = li.querySelector('.category-badge');
+        const category = categorySpan ? categorySpan.getAttribute('data-category') : null;
         return {
             text: li.childNodes[1].textContent.trim(),
             completed: li.querySelector('.task-checkbox').checked,
             priority: priority,
             createdAt: createdAt,
-            dueDate: dueDate
+            dueDate: dueDate,
+            category: category
         };
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -113,7 +117,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null, dueDate = null) {
+function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null, dueDate = null, category = null) {
     const li = document.createElement('li');
     const textNode = document.createTextNode(taskText);
     
@@ -220,10 +224,12 @@ function addTask() {
         }
         const priority = prioritySelect.value;
         const dueDate = dueDateInput.value || null;
-        const li = createTaskElement(taskText, false, priority, null, dueDate);
+        const category = categoryInput.value.trim() || null;
+        const li = createTaskElement(taskText, false, priority, null, dueDate, category);
         taskList.appendChild(li);
         taskInput.value = '';
         dueDateInput.value = '';
+        categoryInput.value = '';
         saveTasks();
         updateTaskCount();
         filterTasks(currentFilter); // Reapply filter
@@ -327,7 +333,7 @@ redoButton.addEventListener('click', function() {
 function restoreTasks(tasksData) {
     taskList.innerHTML = '';
     tasksData.forEach(task => {
-        const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt, task.dueDate);
+        const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt, task.dueDate, task.category);
         taskList.appendChild(li);
     });
     updateTaskCount();
