@@ -206,11 +206,18 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
         if (checkbox.checked) {
             li.style.textDecoration = 'line-through';
             li.style.opacity = '0.6';
+            // Show completion animation
+            li.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                li.style.transform = 'scale(1)';
+            }, 200);
         } else {
             li.style.textDecoration = 'none';
             li.style.opacity = '1';
         }
         saveTasks();
+        updateTaskCount();
+        filterTasks(currentFilter);
     });
     li.appendChild(checkbox);
     li.appendChild(textNode);
@@ -255,6 +262,10 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
     editBtn.addEventListener('click', function() {
         const newText = prompt('Edit task:', taskText);
         if (newText !== null && newText.trim() !== '') {
+            if (newText.trim().length > 200) {
+                alert('Task text is too long. Maximum 200 characters allowed.');
+                return;
+            }
             textNode.textContent = newText.trim();
             saveTasks();
         }
