@@ -63,6 +63,15 @@
         <button id="clearButton">Clear All</button>
         <button id="bulkCompleteButton">Complete Selected</button>
     </div>
+    <div class="templates-container">
+        <button id="templateButton">Use Template</button>
+        <select id="templateSelect" style="display: none;">
+            <option value="">Select a template...</option>
+            <option value="daily">Daily Tasks</option>
+            <option value="weekly">Weekly Review</option>
+            <option value="shopping">Shopping List</option>
+        </select>
+    </div>
     <div class="export-import-container">
         <button id="exportButton">Export Tasks</button>
         <input type="file" id="importInput" accept=".json" style="display: none;">
