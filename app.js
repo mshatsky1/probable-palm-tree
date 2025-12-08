@@ -12,6 +12,7 @@ const filterAll = document.getElementById('filterAll');
 const filterActive = document.getElementById('filterActive');
 const filterCompleted = document.getElementById('filterCompleted');
 const darkModeToggle = document.getElementById('darkModeToggle');
+const sortSelect = document.getElementById('sortSelect');
 const exportButton = document.getElementById('exportButton');
 const importButton = document.getElementById('importButton');
 const importInput = document.getElementById('importInput');
@@ -118,7 +119,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null, dueDate = null, category = null) {
-    const li = document.createElement('li');
+        const li = document.createElement('li');
     const textNode = document.createTextNode(taskText);
     
     // Add priority class
@@ -199,19 +200,19 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
         }
     });
     li.appendChild(editBtn);
-    
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.style.backgroundColor = '#f44336';
-    deleteBtn.style.marginLeft = '10px';
-    deleteBtn.className = 'delete-btn';
-    deleteBtn.addEventListener('click', function() {
-        li.remove();
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.style.backgroundColor = '#f44336';
+        deleteBtn.style.marginLeft = '10px';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.addEventListener('click', function() {
+            li.remove();
         saveTasks();
         updateTaskCount();
-    });
-    li.appendChild(deleteBtn);
-    
+        });
+        li.appendChild(deleteBtn);
+        
     return li;
 }
 
@@ -297,6 +298,41 @@ function filterTasks(filter) {
 filterAll.addEventListener('click', () => filterTasks('all'));
 filterActive.addEventListener('click', () => filterTasks('active'));
 filterCompleted.addEventListener('click', () => filterTasks('completed'));
+
+// Sort functionality
+sortSelect.addEventListener('change', function() {
+    sortTasks(sortSelect.value);
+});
+
+function sortTasks(sortBy) {
+    const taskItems = Array.from(taskList.querySelectorAll('li'));
+    
+    taskItems.sort((a, b) => {
+        if (sortBy === 'priority') {
+            const priorityOrder = { 'high': 3, 'medium': 2, 'low': 1 };
+            const aPriority = Array.from(a.classList).find(c => c.startsWith('priority-'))?.replace('priority-', '') || 'medium';
+            const bPriority = Array.from(b.classList).find(c => c.startsWith('priority-'))?.replace('priority-', '') || 'medium';
+            return priorityOrder[bPriority] - priorityOrder[aPriority];
+        } else if (sortBy === 'dueDate') {
+            const aDue = a.querySelector('.due-date')?.getAttribute('data-due');
+            const bDue = b.querySelector('.due-date')?.getAttribute('data-due');
+            if (!aDue && !bDue) return 0;
+            if (!aDue) return 1;
+            if (!bDue) return -1;
+            return new Date(aDue) - new Date(bDue);
+        } else if (sortBy === 'alphabetical') {
+            const aText = a.childNodes[1].textContent.trim().toLowerCase();
+            const bText = b.childNodes[1].textContent.trim().toLowerCase();
+            return aText.localeCompare(bText);
+        } else { // date
+            const aTime = a.querySelector('.task-time')?.getAttribute('data-time');
+            const bTime = b.querySelector('.task-time')?.getAttribute('data-time');
+            return new Date(bTime) - new Date(aTime);
+        }
+    });
+    
+    taskItems.forEach(li => taskList.appendChild(li));
+}
 
 // Export/Import functionality
 exportButton.addEventListener('click', function() {

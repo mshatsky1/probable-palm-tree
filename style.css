@@ -83,6 +83,23 @@ body.dark-mode {
     margin-bottom: 20px;
 }
 
+.sort-container {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.sort-container label {
+    margin-right: 10px;
+}
+
+.sort-container select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
 .filter-btn {
     padding: 8px 16px;
     background-color: rgba(255, 255, 255, 0.2);
