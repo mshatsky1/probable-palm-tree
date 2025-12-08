@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="description" content="A modern task management application with priority levels, due dates, and more">
 </head>
 <body>
     <div class="header-controls">
-        <h1>Task Manager</h1>
+        <h1 role="heading" aria-level="1">Task Manager</h1>
         <button id="darkModeToggle" class="dark-mode-btn">🌙 Dark Mode</button>
     </div>
     <div class="task-counter">
@@ -50,7 +51,7 @@
         <input type="text" id="searchInput" placeholder="Search tasks...">
     </div>
     <div class="input-container">
-        <input type="text" id="taskInput" placeholder="Enter a new task">
+        <input type="text" id="taskInput" placeholder="Enter a new task" aria-label="Task input">
         <select id="prioritySelect">
             <option value="low">Low Priority</option>
             <option value="medium" selected>Medium Priority</option>

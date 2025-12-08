@@ -158,6 +158,7 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
     checkbox.type = 'checkbox';
     checkbox.className = 'task-checkbox';
     checkbox.checked = isCompleted;
+    checkbox.setAttribute('aria-label', `Mark "${taskText}" as ${isCompleted ? 'incomplete' : 'complete'}`);
     checkbox.addEventListener('change', function() {
         if (checkbox.checked) {
             li.style.textDecoration = 'line-through';
