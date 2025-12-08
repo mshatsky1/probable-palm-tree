@@ -21,6 +21,7 @@ const searchInput = document.getElementById('searchInput');
 const undoButton = document.getElementById('undoButton');
 const redoButton = document.getElementById('redoButton');
 const bulkCompleteButton = document.getElementById('bulkCompleteButton');
+const archiveButton = document.getElementById('archiveButton');
 const templateButton = document.getElementById('templateButton');
 const templateSelect = document.getElementById('templateSelect');
 
