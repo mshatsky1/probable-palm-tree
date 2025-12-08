@@ -19,6 +19,7 @@ const importInput = document.getElementById('importInput');
 const searchInput = document.getElementById('searchInput');
 const undoButton = document.getElementById('undoButton');
 const redoButton = document.getElementById('redoButton');
+const bulkCompleteButton = document.getElementById('bulkCompleteButton');
 
 let currentFilter = 'all';
 let darkMode = localStorage.getItem('darkMode') === 'true';
@@ -111,6 +112,28 @@ clearButton.addEventListener('click', function() {
         taskList.innerHTML = '';
         tasks = [];
         localStorage.removeItem('tasks');
+        updateTaskCount();
+    }
+});
+
+// Bulk operations
+bulkCompleteButton.addEventListener('click', function() {
+    const visibleTasks = Array.from(taskList.querySelectorAll('li')).filter(li => li.style.display !== 'none');
+    const incompleteTasks = visibleTasks.filter(li => !li.querySelector('.task-checkbox').checked);
+    
+    if (incompleteTasks.length === 0) {
+        alert('No incomplete tasks to complete.');
+        return;
+    }
+    
+    if (confirm(`Mark ${incompleteTasks.length} task(s) as completed?`)) {
+        incompleteTasks.forEach(li => {
+            const checkbox = li.querySelector('.task-checkbox');
+            checkbox.checked = true;
+            li.style.textDecoration = 'line-through';
+            li.style.opacity = '0.6';
+        });
+        saveTasks();
         updateTaskCount();
     }
 });
