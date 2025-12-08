@@ -52,8 +52,21 @@ function loadTasks() {
     }
 }
 
+// Debounce function for performance
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // Save tasks to localStorage
-function saveTasks() {
+const saveTasksDebounced = debounce(function() {
     const taskElements = taskList.querySelectorAll('li');
     tasks = Array.from(taskElements).map(li => {
         const priorityClass = Array.from(li.classList).find(c => c.startsWith('priority-'));
@@ -83,6 +96,10 @@ function saveTasks() {
         taskHistory.shift();
         historyIndex--;
     }
+}, 300);
+
+function saveTasks() {
+    saveTasksDebounced();
 }
 
 addButton.addEventListener('click', function() {
@@ -393,9 +410,8 @@ function restoreTasks(tasksData) {
     filterTasks(currentFilter);
 }
 
-// Search functionality
-searchInput.addEventListener('input', function() {
-    const searchTerm = searchInput.value.toLowerCase();
+// Search functionality with debouncing
+const searchTasksDebounced = debounce(function(searchTerm) {
     const taskItems = taskList.querySelectorAll('li');
     taskItems.forEach(li => {
         const taskText = li.childNodes[1].textContent.toLowerCase();
@@ -405,6 +421,11 @@ searchInput.addEventListener('input', function() {
             li.style.display = 'none';
         }
     });
+}, 200);
+
+searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+    searchTasksDebounced(searchTerm);
 });
 
 // Load tasks when page loads
