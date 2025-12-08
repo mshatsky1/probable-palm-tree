@@ -5,6 +5,7 @@ const taskInput = document.getElementById('taskInput');
 const addButton = document.getElementById('addButton');
 const clearButton = document.getElementById('clearButton');
 const prioritySelect = document.getElementById('prioritySelect');
+const dueDateInput = document.getElementById('dueDateInput');
 const taskList = document.getElementById('taskList');
 const filterAll = document.getElementById('filterAll');
 const filterActive = document.getElementById('filterActive');
@@ -39,7 +40,7 @@ function loadTasks() {
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
         tasks.forEach(task => {
-            const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt);
+            const li = createTaskElement(task.text, task.completed, task.priority || 'medium', task.createdAt, task.dueDate);
             taskList.appendChild(li);
         });
     }
@@ -53,11 +54,14 @@ function saveTasks() {
         const priority = priorityClass ? priorityClass.replace('priority-', '') : 'medium';
         const timeSpan = li.querySelector('.task-time');
         const createdAt = timeSpan ? timeSpan.getAttribute('data-time') : new Date().toISOString();
+        const dueDateSpan = li.querySelector('.due-date');
+        const dueDate = dueDateSpan ? dueDateSpan.getAttribute('data-due') : null;
         return {
             text: li.childNodes[1].textContent.trim(),
             completed: li.querySelector('.task-checkbox').checked,
             priority: priority,
-            createdAt: createdAt
+            createdAt: createdAt,
+            dueDate: dueDate
         };
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -96,7 +100,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null) {
+function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null, dueDate = null) {
     const li = document.createElement('li');
     const textNode = document.createTextNode(taskText);
     
@@ -133,6 +137,32 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
     li.appendChild(checkbox);
     li.appendChild(textNode);
     li.appendChild(timeSpan);
+    
+    // Add due date if provided
+    if (dueDate) {
+        const dueDateSpan = document.createElement('span');
+        dueDateSpan.className = 'due-date';
+        const dueDateObj = new Date(dueDate);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        dueDateObj.setHours(0, 0, 0, 0);
+        
+        if (dueDateObj < today) {
+            dueDateSpan.textContent = `⚠️ Overdue: ${dueDateObj.toLocaleDateString()}`;
+            dueDateSpan.style.color = '#f44336';
+            dueDateSpan.style.fontWeight = 'bold';
+        } else if (dueDateObj.getTime() === today.getTime()) {
+            dueDateSpan.textContent = `📅 Due today`;
+            dueDateSpan.style.color = '#ff9800';
+        } else {
+            dueDateSpan.textContent = `📅 Due: ${dueDateObj.toLocaleDateString()}`;
+            dueDateSpan.style.color = '#4CAF50';
+        }
+        dueDateSpan.style.fontSize = '12px';
+        dueDateSpan.style.marginLeft = '10px';
+        dueDateSpan.setAttribute('data-due', dueDate);
+        li.appendChild(dueDateSpan);
+    }
     
     if (isCompleted) {
         li.style.textDecoration = 'line-through';
@@ -176,9 +206,11 @@ function addTask() {
             return;
         }
         const priority = prioritySelect.value;
-        const li = createTaskElement(taskText, false, priority);
+        const dueDate = dueDateInput.value || null;
+        const li = createTaskElement(taskText, false, priority, null, dueDate);
         taskList.appendChild(li);
         taskInput.value = '';
+        dueDateInput.value = '';
         saveTasks();
         updateTaskCount();
         filterTasks(currentFilter); // Reapply filter
