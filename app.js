@@ -13,6 +13,7 @@ const darkModeToggle = document.getElementById('darkModeToggle');
 const exportButton = document.getElementById('exportButton');
 const importButton = document.getElementById('importButton');
 const importInput = document.getElementById('importInput');
+const searchInput = document.getElementById('searchInput');
 
 let currentFilter = 'all';
 let darkMode = localStorage.getItem('darkMode') === 'true';
@@ -238,6 +239,20 @@ importInput.addEventListener('change', function(e) {
     if (e.target.files.length > 0) {
         importTasks(e.target.files[0]);
     }
+});
+
+// Search functionality
+searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const taskItems = taskList.querySelectorAll('li');
+    taskItems.forEach(li => {
+        const taskText = li.childNodes[1].textContent.toLowerCase();
+        if (taskText.includes(searchTerm)) {
+            li.style.display = 'flex';
+        } else {
+            li.style.display = 'none';
+        }
+    });
 });
 
 // Load tasks when page loads
