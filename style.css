@@ -248,6 +248,7 @@ button:hover {
     transform: translateY(-1px);
 }
 
+/* Animation for new task items */
 @keyframes slideIn {
     from {
         opacity: 0;
