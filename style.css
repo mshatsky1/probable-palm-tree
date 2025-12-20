@@ -245,6 +245,7 @@ button:hover {
     outline: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     word-wrap: break-word;
+    gap: 10px;
 }
 
 #taskList li:focus {
