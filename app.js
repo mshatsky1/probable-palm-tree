@@ -346,7 +346,7 @@ function updateTaskCount() {
     document.getElementById('statOverdue').textContent = overdue;
 }
 
-// Filter tasks
+// Filter tasks based on selected filter
 function filterTasks(filter) {
     currentFilter = filter;
     const taskItems = taskList.querySelectorAll('li');
