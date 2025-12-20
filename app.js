@@ -34,6 +34,7 @@ let historyIndex = -1;
 
 // Dark mode functionality
 function toggleDarkMode() {
+    // Toggle dark mode state and update UI
     darkMode = !darkMode;
     document.body.classList.toggle('dark-mode', darkMode);
     localStorage.setItem('darkMode', darkMode);
