@@ -51,6 +51,7 @@ body.dark-mode {
 
 .export-import-container button {
     background-color: #2196F3;
+    font-size: 14px;
 }
 
 .export-import-container button:hover {
