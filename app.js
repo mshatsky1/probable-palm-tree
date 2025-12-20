@@ -387,6 +387,7 @@ sortSelect.addEventListener('change', function() {
     sortTasks(sortSelect.value);
 });
 
+// Sort tasks based on selected criteria
 function sortTasks(sortBy) {
     const taskItems = Array.from(taskList.querySelectorAll('li'));
     
