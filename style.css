@@ -96,6 +96,7 @@ body.dark-mode {
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .sort-container {
