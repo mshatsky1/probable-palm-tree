@@ -1,4 +1,4 @@
-// Utility functions for task management
+// Utility functions for task management and data portability
 
 export function exportTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
