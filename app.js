@@ -112,6 +112,7 @@ function saveTasks() {
     saveTasksDebounced();
 }
 
+// Event listeners for user interactions
 addButton.addEventListener('click', function() {
     addTask();
 });
