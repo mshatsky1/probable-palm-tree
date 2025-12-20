@@ -153,7 +153,7 @@ taskInput.addEventListener('keypress', function(e) {
     }
 });
 
-// Keyboard shortcuts
+// Keyboard shortcuts for improved user experience
 document.addEventListener('keydown', function(e) {
     // Ctrl/Cmd + K to focus input
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
