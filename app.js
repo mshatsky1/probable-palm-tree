@@ -460,7 +460,7 @@ function restoreTasks(tasksData) {
     filterTasks(currentFilter);
 }
 
-// Search functionality with debouncing
+// Search functionality with debouncing for better performance
 const searchTasksDebounced = debounce(function(searchTerm) {
     const taskItems = taskList.querySelectorAll('li');
     taskItems.forEach(li => {
