@@ -106,6 +106,12 @@ body.dark-mode {
     font-size: 16px;
     border-radius: 4px;
     border: 1px solid #ddd;
+    transition: border-color 0.2s ease;
+}
+
+select:focus {
+    border-color: #667eea;
+    outline: none;
 }
 
 .filter-btn {
