@@ -4,7 +4,8 @@ A simple task management application built with HTML, CSS, and JavaScript.
 
 ## Features
 
-- Add tasks with priority levels (Low, Medium, High)
+- Add, edit, and delete tasks
+- Task priority levels (Low, Medium, High)
 - Delete tasks
 - Mark tasks as completed
 - Task filtering (All, Active, Completed)
