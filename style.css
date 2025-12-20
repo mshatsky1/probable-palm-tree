@@ -39,6 +39,7 @@ body.dark-mode {
     justify-content: center;
     gap: 10px;
     margin: 20px 0;
+    align-items: center;
 }
 
 .export-import-container {
