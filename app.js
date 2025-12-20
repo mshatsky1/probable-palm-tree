@@ -74,7 +74,7 @@ function debounce(func, wait) {
     };
 }
 
-// Save tasks to localStorage
+// Save tasks to localStorage with debouncing for performance
 const saveTasksDebounced = debounce(function() {
     const taskElements = taskList.querySelectorAll('li');
     tasks = Array.from(taskElements).map(li => {
