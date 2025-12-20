@@ -1,5 +1,6 @@
 import { exportTasks, importTasks } from './utils.js';
 
+// Application state
 let tasks = [];
 const taskInput = document.getElementById('taskInput');
 const addButton = document.getElementById('addButton');
