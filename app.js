@@ -294,6 +294,7 @@ function createTaskElement(taskText, isCompleted = false, priority = 'medium', c
     return li;
 }
 
+// Add a new task to the list
 function addTask() {
     const taskText = taskInput.value.trim();
     if (taskText) {
