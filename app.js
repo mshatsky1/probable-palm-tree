@@ -452,6 +452,7 @@ redoButton.addEventListener('click', function() {
     }
 });
 
+// Restore tasks from history (for undo/redo)
 function restoreTasks(tasksData) {
     taskList.innerHTML = '';
     tasksData.forEach(task => {
