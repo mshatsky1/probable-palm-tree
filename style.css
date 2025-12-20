@@ -144,6 +144,12 @@ input {
     width: 300px;
     border-radius: 4px;
     border: 1px solid #ddd;
+    transition: border-color 0.2s ease;
+}
+
+input:focus {
+    border-color: #667eea;
+    outline: none;
 }
 
 @media (max-width: 600px) {
