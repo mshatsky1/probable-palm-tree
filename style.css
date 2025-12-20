@@ -260,6 +260,7 @@ button:hover {
     }
 }
 
+/* Priority level visual indicators */
 .priority-high {
     border-left: 4px solid #f44336;
 }
