@@ -61,8 +61,9 @@ function loadTasks() {
     }
 }
 
-// Debounce function for performance
+// Debounce function for performance optimization
 function debounce(func, wait) {
+    // Prevents function from being called too frequently
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
