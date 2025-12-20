@@ -481,7 +481,7 @@ searchInput.addEventListener('input', function() {
     searchTasksDebounced(searchTerm);
 });
 
-// Load tasks when page loads
+// Initialize application on page load
 loadTasks();
 updateTaskCount();
 
