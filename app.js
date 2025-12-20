@@ -125,7 +125,7 @@ clearButton.addEventListener('click', function() {
     }
 });
 
-// Bulk operations
+// Bulk operations for managing multiple tasks at once
 bulkCompleteButton.addEventListener('click', function() {
     const visibleTasks = Array.from(taskList.querySelectorAll('li')).filter(li => li.style.display !== 'none');
     const incompleteTasks = visibleTasks.filter(li => !li.querySelector('.task-checkbox').checked);
