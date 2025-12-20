@@ -260,5 +260,6 @@ button:hover {
 .delete-btn {
     font-size: 14px;
     padding: 5px 10px;
+    transition: background-color 0.2s ease;
 }
 
