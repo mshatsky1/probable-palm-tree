@@ -182,6 +182,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+// Create a task element with all necessary components
 function createTaskElement(taskText, isCompleted = false, priority = 'medium', createdAt = null, dueDate = null, category = null) {
         const li = document.createElement('li');
     const textNode = document.createTextNode(taskText);
