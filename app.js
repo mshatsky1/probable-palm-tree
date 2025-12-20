@@ -382,7 +382,7 @@ filterActive.addEventListener('click', () => filterTasks('active'));
 filterCompleted.addEventListener('click', () => filterTasks('completed'));
 filterOverdue.addEventListener('click', () => filterTasks('overdue'));
 
-// Sort functionality
+// Sort functionality - handle sort selection change
 sortSelect.addEventListener('change', function() {
     sortTasks(sortSelect.value);
 });
