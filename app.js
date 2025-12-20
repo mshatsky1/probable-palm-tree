@@ -26,6 +26,7 @@ const archiveButton = document.getElementById('archiveButton');
 const templateButton = document.getElementById('templateButton');
 const templateSelect = document.getElementById('templateSelect');
 
+// Application configuration
 let currentFilter = 'all';
 let darkMode = localStorage.getItem('darkMode') === 'true';
 let taskHistory = [];
