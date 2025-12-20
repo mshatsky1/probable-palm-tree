@@ -316,7 +316,7 @@ function addTask() {
     }
 }
 
-// Update task counter
+// Update task counter and statistics
 function updateTaskCount() {
     const allTasks = taskList.querySelectorAll('li');
     const count = allTasks.length;
