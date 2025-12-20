@@ -21,6 +21,7 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     margin: 0;
     flex: 1;
+    font-size: 2em;
 }
 
 .dark-mode-btn {
