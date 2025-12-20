@@ -101,6 +101,7 @@ body.dark-mode {
 
 .sort-container label {
     margin-right: 10px;
+    font-weight: 500;
 }
 
 .sort-container select {
