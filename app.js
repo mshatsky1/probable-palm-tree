@@ -50,6 +50,7 @@ darkModeToggle.addEventListener('click', toggleDarkMode);
 
 // Load tasks from localStorage on page load
 function loadTasks() {
+    // Retrieve and restore saved tasks
     const savedTasks = localStorage.getItem('tasks');
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
