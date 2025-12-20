@@ -420,7 +420,7 @@ function sortTasks(sortBy) {
     taskItems.forEach(li => taskList.appendChild(li));
 }
 
-// Export/Import functionality
+// Export/Import functionality for data portability
 exportButton.addEventListener('click', function() {
     exportTasks();
 });
