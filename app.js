@@ -435,7 +435,7 @@ importInput.addEventListener('change', function(e) {
     }
 });
 
-// Undo/Redo functionality
+// Undo/Redo functionality for task history management
 undoButton.addEventListener('click', function() {
     if (historyIndex > 0) {
         historyIndex--;
